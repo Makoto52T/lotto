@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "Kanit";
+  src: url("../src/font/Kanit-Light.ttf");
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Kanit" !important;
+  /* background-image: url("../public/bg0.jpg"); */
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
