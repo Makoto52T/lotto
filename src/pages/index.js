@@ -191,8 +191,8 @@ export default function Home () {
       setFromDate (new Date (d.getFullYear (), d.getMonth (), 1));
       setToDate (new Date (d.getFullYear (), d.getMonth () + 1, 0));
     } else if (input === 'เดือนที่แล้ว') {
-      setFromDate (new Date (d.getFullYear (), d.getMonth () - 2, 1));
-      setToDate (new Date (d.getFullYear (), d.getMonth () - 1, 0));
+      setFromDate (new Date (d.getFullYear (), d.getMonth () - 1, 1));
+      setToDate (new Date (d.getFullYear (), d.getMonth (), 0));
     }
   }
 
