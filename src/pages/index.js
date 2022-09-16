@@ -17,6 +17,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import ListLotto from '../components/listLotto';
 import TableResult from '../components/TableResult';
+import { dateNow } from './functions';
 
 export default function Home () {
   const [fromDate, setFromDate] = useState (new Date ());
@@ -157,10 +158,23 @@ export default function Home () {
 
   function getBtnDate () {
     return BtnDate.map ((val, i) => (
-      <Button key={i} style={{margin: '10px'}} size="sm" variant="primary">
+      <Button
+        key={i}
+        style={{margin: '10px'}}
+        size="sm"
+        variant="primary"
+        onClick={() => {
+          getDate (val);
+        }}
+      >
         {val}
       </Button>
     ));
+  }
+
+  async function getDate (input) {
+    let rs = await dateNow();
+    console.log(rs);
   }
 
   return (
