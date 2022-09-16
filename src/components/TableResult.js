@@ -41,7 +41,7 @@ const TableResult = ({detail}) => {
     }
   });
 
-  return <Table id="example" className="display" width="100%" />;
+  return <Table id="example" className="display" width="100%" ></Table>;
 };
 
 export default TableResult;

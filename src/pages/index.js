@@ -17,7 +17,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 import ListLotto from '../components/listLotto';
 import TableResult from '../components/TableResult';
-import { dateNow } from './functions';
 
 export default function Home () {
   const [fromDate, setFromDate] = useState (new Date ());
@@ -173,8 +172,28 @@ export default function Home () {
   }
 
   async function getDate (input) {
-    let rs = await dateNow();
-    console.log(rs);
+    let d = new Date ();
+    if (input === 'วันนี้') {
+      setFromDate (d);
+      setToDate (d);
+    } else if (input === 'เมื่อวาน') {
+      d.setDate (d.getDate () - 1);
+      setFromDate (d);
+      setToDate (d);
+    } else if (input === 'สัปดาห์นี้') {
+      setFromDate (new Date (d.setDate (d.getDate () - d.getDay () + 1)));
+      setToDate (new Date (d.setDate (d.getDate () - d.getDay () + 7)));
+    } else if (input === 'สัปดาห์ที่แล้ว') {
+      setFromDate (new Date (d.setDate (d.getDate () - d.getDay () - 6)));
+      let e = new Date ();
+      setToDate (new Date (e.setDate (e.getDate () - e.getDay ())));
+    } else if (input === 'เดือนนี้') {
+      setFromDate (new Date (d.getFullYear (), d.getMonth (), 1));
+      setToDate (new Date (d.getFullYear (), d.getMonth () + 1, 0));
+    } else if (input === 'เดือนที่แล้ว') {
+      setFromDate (new Date (d.getFullYear (), d.getMonth () - 2, 1));
+      setToDate (new Date (d.getFullYear (), d.getMonth () - 1, 0));
+    }
   }
 
   return (
@@ -187,13 +206,13 @@ export default function Home () {
           <DatePicker
             selected={fromDate}
             onChange={date => setFromDate (date)}
-            dateFormat="d/MM/yyyy"
+            dateFormat="dd/MM/yyyy"
           />
           <label style={{margin: '10px'}}>ถึง</label>
           <DatePicker
             selected={toDate}
             onChange={date => setToDate (date)}
-            dateFormat="d/MM/yyyy"
+            dateFormat="dd/MM/yyyy"
           />
           {getBtnDate ()}
         </InputGroup.Text>
