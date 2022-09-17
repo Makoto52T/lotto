@@ -1,14 +1,14 @@
 import React from 'react';
 import {Dropdown} from 'react-bootstrap';
 
-export default function DropdownList({index, title, variant, value, func}) {
+export default function DropdownList({index, variant, value, func}) {
   return (
     <Dropdown key={index}>
       <Dropdown.Toggle variant={variant}>
-        {title}...
+        {value.country}...
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {value.map ((x, i) => (
+        {value.data.map ((x, i) => (
           <Dropdown.Item
             key={i}
             onClick={() => {

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import ListLotto from '../components/listLotto';
 import ListLottoRight from '../components/listLottoRight';
-import ListLottoNew from '../components/listLottoRightNew';
 import TableResult from '../components/TableResult';
 import DateForm from '../components/dateform';
 import {List, Detail} from './array';
@@ -51,14 +50,9 @@ export default function Home () {
                 <hr className="my-3" />
                 <TableResult detail={Detail} />
               </Col>
-              <Col md={2} className="text-left">
-                {/* <ListLottoRight
-                  lottoList={lottoList}
-                  btnList={btnList}
-                  active={active}
-                  setActive={setActive}
-                /> */}
-                <ListLottoNew
+              <Col md={2}>
+                <h4>หวยทั้งหมด</h4>
+                <ListLottoRight
                   lottoList={lottoList}
                   btnList={btnList}
                   active={active}

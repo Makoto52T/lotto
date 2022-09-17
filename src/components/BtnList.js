@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button} from 'react-bootstrap';
 
-export default function BtnList({func, variant, value, index}) {
+export default function BtnList({value, index, config, variant}) {
+  useEffect (() => {
+    if (config) {
+      console.log (config);
+    }
+  }, []);
   return (
     <Button
       key={index}
-      size="sm"
-      style={{margin: '3px'}}
+      size={config.size}
+      style={{margin: config.margin}}
       variant={variant}
       onClick={() => {
-        func (value, index);
+        config.func (value, index);
       }}
     >
       {value}
