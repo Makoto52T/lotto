@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import {useRouter} from 'next/router';
 import ListLotto from '../components/listLotto';
 import ListLottoRight from '../components/listLottoRight';
+import ListLottoNew from '../components/listLottoRightNew';
 import TableResult from '../components/TableResult';
 import DateForm from '../components/dateform';
 import {List, Detail} from './array';
@@ -28,12 +29,12 @@ export default function Home () {
     );
   }
 
-  function btnListRight (input, index) {
+  function btnListNew (input, index) {
     setActive ({selectBtn: input, variant: 'primary'});
     setLottoList (prevState =>
       prevState.map ((x, i) => {
         console.log (x, i, index);
-        if (i === index) return {country: input, data: x.data};
+        if (i === index) return {country: input, data: x.data, title: x.title};
         return x;
       })
     );
@@ -72,12 +73,19 @@ export default function Home () {
                 <TableResult detail={Detail} />
               </Col>
               <Col md={2} className="text-left">
-                <ListLottoRight
+                {/* <ListLottoRight
                   lottoList={lottoList}
                   btnList={btnList}
                   active={active}
                   setActive={setActive}
                   btnListRight={btnListRight}
+                /> */}
+                <ListLottoNew
+                  lottoList={lottoList}
+                  btnList={btnList}
+                  active={active}
+                  setActive={setActive}
+                  btnListNew={btnListNew}
                 />
               </Col>
             </Row>

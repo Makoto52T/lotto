@@ -9,6 +9,7 @@ export const List = [
   },
   {
     country: 'ฮานอย',
+    title: 'ฮานอย',
     data: [
       'ฮานอยปกติ',
       'ฮานอยพิเศษ',
@@ -24,6 +25,7 @@ export const List = [
   },
   {
     country: 'ลาว',
+    title: 'ลาว',
     data: [
       'ลาววังเวียง',
       'ลาว VIP',
@@ -40,10 +42,12 @@ export const List = [
   },
   {
     country: 'จีน',
+    title: 'จีน',
     data: ['จีนเช้า', 'จีนบ่าย', 'จีนเช้า VIP', 'จีนบ่าย VIP'],
   },
   {
     country: 'ฮั่งเส็ง',
+    title: 'ฮั่งเส็ง',
     data: [
       'ฮั่งเส็งเช้า',
       'ฮั่งเส็งบ่าย',
@@ -53,10 +57,12 @@ export const List = [
   },
   {
     country: 'นิเคอิ',
+    title: 'นิเคอิ',
     data: ['นิเคอิเช้า', 'นิเคอิบ่าย', 'นิเคอิ VIP', 'นิเคอิบ่าย VIP'],
   },
   {
     country: 'อื่นๆ',
+    title: 'อื่นๆ',
     data: [
       'อินเดีย',
       'อียิปต์',
