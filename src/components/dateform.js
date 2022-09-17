@@ -1,15 +1,6 @@
 import React from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
-import {
-  Container,
-  Row,
-  Col,
-  InputGroup,
-  Form,
-  Button,
-  Dropdown,
-} from 'react-bootstrap';
+import {InputGroup, Button} from 'react-bootstrap';
 
 const DateForm = ({fromDate, setFromDate, toDate, setToDate}) => {
   const BtnDate = [
@@ -50,9 +41,8 @@ const DateForm = ({fromDate, setFromDate, toDate, setToDate}) => {
       setFromDate (new Date (d.setDate (d.getDate () - d.getDay () + 1)));
       setToDate (new Date (d.setDate (d.getDate () - d.getDay () + 7)));
     } else if (input === 'สัปดาห์ที่แล้ว') {
+      setToDate (new Date (d.setDate (d.getDate () - d.getDay ())));
       setFromDate (new Date (d.setDate (d.getDate () - d.getDay () - 6)));
-      let e = new Date ();
-      setToDate (new Date (e.setDate (e.getDate () - e.getDay ())));
     } else if (input === 'เดือนนี้') {
       setFromDate (new Date (d.getFullYear (), d.getMonth (), 1));
       setToDate (new Date (d.getFullYear (), d.getMonth () + 1, 0));

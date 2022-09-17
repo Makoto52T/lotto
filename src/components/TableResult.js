@@ -4,17 +4,7 @@ import 'datatables.net-dt/css/jquery.dataTables.css';
 const $ = require ('jquery');
 $.DataTable = require ('datatables.net');
 
-import {
-  Container,
-  Row,
-  Col,
-  InputGroup,
-  Form,
-  Button,
-  Dropdown,
-  Table,
-  FormControl,
-} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 
 const TableResult = ({detail}) => {
   const [loadTb, setLoadTb] = useState (true);
@@ -41,7 +31,7 @@ const TableResult = ({detail}) => {
     }
   });
 
-  return <Table id="example" className="display" width="100%" ></Table>;
+  return <Table id="example" className="display" width="100%" />;
 };
 
 export default TableResult;
