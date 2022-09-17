@@ -1,26 +1,44 @@
 import React from 'react';
-import {InputGroup, Button, Dropdown} from 'react-bootstrap';
+import BtnList from './BtnList';
 
-const ListLotto = ({lottoList, btnList, active,btnListRight}) => {
+const ListLotto = ({lottoList, btnList, active}) => {
   function listLotto () {
     return lottoList.map (
       (val, index) =>
         val.data.length === 0
-          ? active.selectBtn === val.country ?
-          <Button key={index} size='sm' style={{margin:"3px"}} variant={active.variant}>{val.country}</Button>:
-          <Button key={index} size='sm' style={{margin:"3px"}} variant="outline-secondary" onClick={() => {
-            btnList (val.country, index);
-          }}>{val.country}</Button>
-          : val.data.map ((x, i) => active.selectBtn === x ?
-              <Button key={i} size='sm' style={{margin:"3px"}} variant={active.variant}>{x}</Button>:
-              <Button key={i} size='sm' style={{margin:"3px"}} variant="outline-secondary" onClick={() => {
-                btnListRight (x, index);
-              }}>{x}</Button>
+          ? active.selectBtn === val.country
+              ? <BtnList
+                  func={btnList}
+                  variant={active.variant}
+                  value={val.country}
+                  index={index}
+                />
+              : <BtnList
+                  func={btnList}
+                  variant={'outline-secondary'}
+                  value={val.country}
+                  index={index}
+                />
+          : val.data.map (
+              (x, i) =>
+                active.selectBtn === x
+                  ? <BtnList
+                      func={btnList}
+                      variant={active.variant}
+                      value={x}
+                      index={index}
+                    />
+                  : <BtnList
+                      func={btnList}
+                      variant={'outline-secondary'}
+                      value={x}
+                      index={index}
+                    />
             )
     );
   }
 
-  return <>{listLotto ()}</>;
+  return <div>{listLotto ()}</div>;
 };
 
 export default ListLotto;

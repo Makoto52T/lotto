@@ -1,7 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
-import Cookies from 'js-cookie';
-import {useRouter} from 'next/router';
 import ListLotto from '../components/listLotto';
 import ListLottoRight from '../components/listLottoRight';
 import ListLottoNew from '../components/listLottoRightNew';
@@ -59,14 +57,12 @@ export default function Home () {
                   btnList={btnList}
                   active={active}
                   setActive={setActive}
-                  btnListRight={btnListRight}
                 /> */}
                 <ListLottoNew
                   lottoList={lottoList}
                   btnList={btnList}
                   active={active}
                   setActive={setActive}
-                  btnListNew={btnListNew}
                 />
               </Col>
             </Row>

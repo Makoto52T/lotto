@@ -1,58 +1,44 @@
 import React from 'react';
-import {
-  InputGroup,
-  Button,
-  Dropdown,
-} from 'react-bootstrap';
+import {InputGroup, Button, Dropdown} from 'react-bootstrap';
+import DropdownList from './DropdownList';
 
-const ListLotto = ({ lottoList, btnList,active }) => {
-    
-    
+const ListLotto = ({lottoList, btnList, active}) => {
   function listLotto () {
     return lottoList.map (
       (val, index) =>
         val.data.length === 0
           ? active.selectBtn === val.country
-              ? <Button key={index} variant={active.variant}>{val.country}</Button>
-              : <Button key={index} variant="outline-secondary" onClick={() => {
-                btnList (val.country,index);
-              }}>{val.country}</Button>
-          : <Dropdown key={index}>
-              {active.selectBtn === val.country ? 
-              <>
-                <Dropdown.Toggle variant="primary">
-                  {val.country}...
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {val.data.map ((x,i) => <Dropdown.Item key={i}
-                      onClick={() => {
-                        btnList (x,index);
-                      }}>{x}</Dropdown.Item>)}
-                </Dropdown.Menu>
-              </>
-              :
-              <>
-                <Dropdown.Toggle variant="outline-secondary">
-                  {val.country}...
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {val.data.map ((x,i) => (
-                    <Dropdown.Item key={i}
-                      onClick={() => {
-                        btnList (x,index);
-                      }}
-                    >
-                      {x}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </>
-              }
-            </Dropdown>
+              ? <Button key={index} variant={active.variant}>
+                  {val.country}
+                </Button>
+              : <Button
+                  key={index}
+                  variant="outline-secondary"
+                  onClick={() => {
+                    btnList (val.country, index);
+                  }}
+                >
+                  {val.country}
+                </Button>
+          : active.selectBtn === val.country
+              ? <DropdownList
+                  index={index}
+                  title={val.country}
+                  variant={'primary'}
+                  value={val.data}
+                  func={btnList}
+                />
+              : <DropdownList
+                  index={index}
+                  title={val.country}
+                  variant={'outline-secondary'}
+                  value={val.data}
+                  func={btnList}
+                />
     );
   }
 
-  return <InputGroup>{listLotto()}</InputGroup>;
+  return <InputGroup>{listLotto ()}</InputGroup>;
 };
 
 export default ListLotto;
