@@ -16,7 +16,7 @@ const ListLottoNew = ({lottoList, btnList, active,btnListNew}) => {
             {val.data.map ((x, i) => active.selectBtn === x ?
               <Button key={i} size='sm' style={{margin:"3px"}} variant={active.variant}>{x}</Button>:
               <Button key={i} size='sm' style={{margin:"3px"}} variant="outline-secondary" onClick={() => {
-                btnListNew (x, index);
+                btnList (x, index);
               }}>{x}</Button>
             )}
           </>

@@ -12,7 +12,6 @@ import {List, Detail} from './array';
 export default function Home () {
   const [fromDate, setFromDate] = useState (new Date ());
   const [toDate, setToDate] = useState (new Date ());
-  const [dateTime, setDate] = useState ({});
   const [active, setActive] = useState ({
     selectBtn: 'ทั้งหมด',
     variant: 'primary',
@@ -23,29 +22,11 @@ export default function Home () {
     setActive ({selectBtn: input, variant: 'primary'});
     setLottoList (prevState =>
       prevState.map ((x, i) => {
-        if (i === index) return {country: input, data: x.data};
-        return x;
-      })
-    );
-  }
-
-  function btnListNew (input, index) {
-    setActive ({selectBtn: input, variant: 'primary'});
-    setLottoList (prevState =>
-      prevState.map ((x, i) => {
-        console.log (x, i, index);
         if (i === index) return {country: input, data: x.data, title: x.title};
         return x;
       })
     );
   }
-
-  useEffect (
-    () => {
-      console.log (lottoList);
-    },
-    [lottoList]
-  );
 
   return (
     <Container>
