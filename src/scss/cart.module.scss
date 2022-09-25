@@ -1,0 +1,73 @@
+.g-1,
+.gy-1 {
+  --bs-gutter-y: 0.25rem;
+}
+.g-1,
+.gx-1 {
+  --bs-gutter-x: 0.25rem;
+}
+.alert {
+  position: relative;
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.label1 {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+label {
+  display: inline-block;
+}
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+user agent stylesheet label {
+  cursor: default;
+}
+
+.form-control-plaintext {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #212529;
+  background-color: transparent;
+  border: solid transparent;
+  border-width: 1px 0;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.numbTxt {
+  width: 100px;
+}
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}

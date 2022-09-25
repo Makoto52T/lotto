@@ -1,0 +1,33 @@
+.ListGroupConfig {
+  width: 200px;
+}
+
+.winrate {
+  white-space: pre-wrap;
+  color: #fff;
+  @media screen and (max-width: 280px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 450px) {
+    height: 100%;
+  }
+}
+.progress_bar {
+  margin: 10px 0;
+}
+.percent {
+  margin: auto auto;
+}
+.percentP {
+  font-size: 3rem;
+  color: #ffd200;
+  @media screen and (max-width: 540px) {
+    font-size: 1.25rem;
+  }
+  @media screen and (max-width: 280px) {
+    font-size: 1.5rem;
+  }
+  @media screen and(min-width:700px) {
+    font-size: 2rem;
+  }
+}

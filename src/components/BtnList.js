@@ -6,7 +6,7 @@ export default function BtnList({value, index, config, variant}) {
     <Button
       key={index}
       size={config.size}
-      style={{margin: config.margin}}
+      style={{margin: config.margin,width:config.width}}
       variant={variant}
       onClick={() => {
         config.func (value, index);
