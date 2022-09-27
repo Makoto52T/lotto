@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {Modal, Button, Form, InputGroup} from 'react-bootstrap';
 import Badge from './Badge';
+import {revers3length} from './Functions';
 
 export default function AddSixRevers({show, setSix, badge, setBadge}) {
   const [numb, setNumb] = useState ();
   const [top, setTop] = useState (0);
   const [tod, setTod] = useState (0);
+
   function handleClose () {
     setSix (false);
   }
@@ -18,75 +20,10 @@ export default function AddSixRevers({show, setSix, badge, setBadge}) {
     document.getElementById ('numbX').focus ();
   }
 
-  function reversAll () {
-    let arr = badge;
-    let old = [];
-    for (let i = 0; i < arr.length; i++) {
-      console.log (arr[i].numb);
-      if (arr[i].numb !== '' && i !== arr.length - 1) {
-        old.push (arr[i]);
-      }
-    }
-    setBadge ([
-      ...old,
-      {
-        numb: numb,
-        Top: top,
-        Bottom: 0,
-        Tod: tod,
-        TodDisable: false,
-        BottomDisable: true,
-      },
-      {
-        numb: numb[0] + '' + numb[2] + '' + numb[1],
-        Top: top,
-        Bottom: 0,
-        Tod: tod,
-        TodDisable: false,
-        BottomDisable: true,
-      },
-      {
-        numb: numb[1] + '' + numb[2] + '' + numb[0],
-        Top: top,
-        Bottom: 0,
-        Tod: tod,
-        TodDisable: false,
-        BottomDisable: true,
-      },
-      {
-        numb: numb[1] + '' + numb[0] + '' + numb[2],
-        Top: top,
-        Bottom: 0,
-        Tod: tod,
-        TodDisable: false,
-        BottomDisable: true,
-      },
-      {
-        numb: numb[2] + '' + numb[0] + '' + numb[1],
-        Top: top,
-        Bottom: 0,
-        Tod: tod,
-        TodDisable: false,
-        BottomDisable: true,
-      },
-      {
-        numb: numb[2] + '' + numb[1] + '' + numb[0],
-        Top: top,
-        Bottom: 0,
-        Tod: tod,
-        TodDisable: false,
-        BottomDisable: true,
-      },
-      {
-        numb: '',
-        Top: '',
-        Bottom: '',
-        Tod: '',
-        TodDisable: true,
-        BottomDisable: false,
-      },
-    ]);
-
+  async function reversAll () {
+    let result = await revers3length (null, badge, numb, top, tod);
+    console.log (result);
+    setBadge (result);
     setSix (false);
   }
 

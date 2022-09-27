@@ -43,6 +43,7 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
+      func: 'reverse2numb'
     },
     {
       numb: '',
@@ -51,6 +52,7 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
+      func: 'reverse2numb'
     },
     {
       numb: '',
@@ -59,6 +61,7 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
+      func: 'reverse2numb'
     },
     {
       numb: '',
@@ -67,6 +70,7 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
+      func: 'reverse2numb'
     },
     {
       numb: '',
@@ -75,6 +79,7 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
+      func: 'reverse2numb'
     },
   ]);
   const [six, setSix] = useState (false);
