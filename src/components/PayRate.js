@@ -1,8 +1,16 @@
-import React from 'react';
-import {Row, Col} from 'react-bootstrap';
+import React, {useState, useEffect} from 'react';
+import {Row, Col, Button} from 'react-bootstrap';
 import DropdownList from './DropdownList';
 
-export default function PayRate({payRate}) {
+export default function PayRate({payRate, config, setConfig}) {
+  async function cRow () {
+    setConfig ({
+      row: !config.row,
+      top: config.top,
+      down: config.down,
+      tod: config.tod,
+    });
+  }
   return (
     <Row>
       <Col>
@@ -12,6 +20,19 @@ export default function PayRate({payRate}) {
               <label className="label1">
                 หวยต่างประเทศ [2022/09/25]
               </label>
+            </td>
+            <td />
+            <td colSpan={2}>
+              <Button
+                variant="warning"
+                onClick={() => {
+                  cRow ();
+                }}
+                style={{width:"120px"}}
+              >
+                {config.row ? <label>หลายแถว</label> : <label>แถวเดียว</label>}
+
+              </Button>
             </td>
           </tr>
           <tr>

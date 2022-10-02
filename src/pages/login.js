@@ -18,6 +18,18 @@ export default function LoginPage () {
       // set cookie token and user
       await Cookies.set ('user', user, {expires: 30});
       await Cookies.set ('token', result.token, {expires: 30});
+      await Cookies.set (
+        'config',
+        JSON.stringify (
+          {
+            row: true,
+            top: true,
+            down: true,
+            tod: true,
+          },
+          {expires: 30}
+        )
+      );
       router.push ('/');
     }
   }

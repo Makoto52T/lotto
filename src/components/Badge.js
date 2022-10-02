@@ -6,20 +6,24 @@ export default function Badge({badge}) {
   const [tod, setTod] = useState (0);
 
   function getBadge () {
-    return badge.map ((x, i) => (
-      <span
-        key={i}
-        className="badge bg-danger"
-        style={{
-          fontSize: '16px',
-          paddingTop: '5px',
-          marginRight: '5px',
-          marginTop: '5px',
-        }}
-      >
-        {x.numb}
-      </span>
-    ));
+    if (badge !== undefined) {
+      return badge.map ((x, i) => (
+        <span
+          key={i}
+          className="badge bg-danger"
+          style={{
+            fontSize: '16px',
+            paddingTop: '5px',
+            marginRight: '5px',
+            marginTop: '5px',
+          }}
+        >
+          {x.numb}
+        </span>
+      ));
+    } else {
+      return <div>{''}</div>;
+    }
   }
 
   return (

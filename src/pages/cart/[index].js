@@ -11,12 +11,17 @@ import {
   FormControl,
   Dropdown,
   InputGroup,
+  Button,
 } from 'react-bootstrap';
 import PayRate from '../../components/PayRate';
 import SelectType from '../../components/SelectType';
 import Badge from '../../components/Badge';
 import AddNumbers from '../../components/AddNumbers';
 import AddSixRevers from '../../components/AddSixRevers';
+import TableSave from '../../components/TableSave';
+import Cookies from 'js-cookie';
+import AddOneRow from '../../components/AddOneRow';
+import * as func from '../../components/Functions';
 
 export default function Carts () {
   const router = useRouter ();
@@ -35,7 +40,8 @@ export default function Carts () {
     {id: 5, name: 'เลขวิ่ง', variant: 'secondary'},
     {id: 6, name: 'วินเลข', variant: 'secondary'},
   ]);
-  const [badge, setBadge] = useState ([
+  const [selectBtn, setSelect] = useState ('2ตัว');
+  const defaultBadge = [
     {
       numb: '',
       Top: '',
@@ -43,7 +49,8 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
-      func: 'reverse2numb'
+      reverse: false,
+      set: 0,
     },
     {
       numb: '',
@@ -52,7 +59,8 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
-      func: 'reverse2numb'
+      reverse: false,
+      set: 0,
     },
     {
       numb: '',
@@ -61,7 +69,8 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
-      func: 'reverse2numb'
+      reverse: false,
+      set: 0,
     },
     {
       numb: '',
@@ -70,7 +79,8 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
-      func: 'reverse2numb'
+      reverse: false,
+      set: 0,
     },
     {
       numb: '',
@@ -79,11 +89,13 @@ export default function Carts () {
       Tod: '',
       TodDisable: true,
       BottomDisable: false,
-      func: 'reverse2numb'
+      reverse: false,
+      set: 0,
     },
-  ]);
+  ];
+  const [badge, setBadge] = useState (defaultBadge);
   const [six, setSix] = useState (false);
-  const [oneNine, setOneNine] = useState (false);
+  const [config, setConfig] = useState ({});
 
   useEffect (
     () => {
@@ -94,7 +106,36 @@ export default function Carts () {
     [index]
   );
 
+  useEffect (
+    () => {
+      if (config.row !== undefined) {
+        Cookies.set (
+          'config',
+          JSON.stringify (
+            {
+              row: config.row,
+              top: config.top,
+              down: config.down,
+              tod: config.tod,
+            },
+            {expires: 30}
+          )
+        );
+      }
+      if (config.row) {
+        setBadge ();
+      } else {
+        setBadge (defaultBadge);
+      }
+    },
+    [config]
+  );
+
   async function init () {
+    let conf = Cookies.get ('config');
+    if (conf !== undefined) {
+      setConfig (JSON.parse (conf));
+    }
     // find data now
     let result = ListIndex[index];
     setData (result);
@@ -108,10 +149,8 @@ export default function Carts () {
 
   function btnSelection () {
     for (let i = 0; i < btn.length; i++) {
-      if (btn[i].variant === 'danger') {
-        if (btn[i].name === '6กลับ') {
-          setSix (true);
-        }
+      if (btn[i].variant === 'danger' && btn[i].name === '6กลับ') {
+        setSix (true);
       }
     }
   }
@@ -138,18 +177,58 @@ export default function Carts () {
       </Row>
 
       <Row>
-        <Col md={6}>
+        <Col md={7}>
           <div className="g-1 alert alert-danger">
-            <PayRate payRate={payRate} />
+            <PayRate payRate={payRate} config={config} setConfig={setConfig} />
           </div>
           <div className="g-1 alert alert-danger">
-            <SelectType data={data} btn={btn} setBtn={setBtn} />
-            <Badge badge={badge} />
-            <AddNumbers badge={badge} setBadge={setBadge} />
+            <Row>
+              <Col>
+                {config.row
+                  ? <div className="text-left">
+                      <SelectType
+                        data={data}
+                        btn={btn}
+                        setBtn={setBtn}
+                        setSelect={setSelect}
+                        setBadge={setBadge}
+                      />
+                      <Badge badge={badge} />
+                      <AddOneRow
+                        badge={badge}
+                        setBadge={setBadge}
+                        selectBtn={selectBtn}
+                      />
+                    </div>
+                  : <AddNumbers
+                      badge={badge}
+                      setBadge={setBadge}
+                      config={config}
+                      setConfig={setConfig}
+                    />}
+              </Col>
+            </Row>
+            <Row className="text-center">
+              <Col>
+                <Button
+                  size="sm"
+                  variant="info"
+                  onClick={() => {
+                    config.row ? setBadge () : setBadge (defaultBadge);
+                  }}
+                  style={{margin: '10px'}}
+                >
+                  ล้าง
+                </Button>
+              </Col>
+            </Row>
           </div>
         </Col>
-        <Col md={6}>R</Col>
+        <Col md={5}>
+          <TableSave badge={badge} />
+        </Col>
       </Row>
+
     </Container>
   );
 }

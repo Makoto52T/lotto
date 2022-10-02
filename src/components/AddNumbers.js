@@ -1,42 +1,147 @@
 import React, {useState, useEffect} from 'react';
-import {InputGroup, Form, Button} from 'react-bootstrap';
+import {InputGroup, Form, Button, Table} from 'react-bootstrap';
 import numeral from 'numeral';
-import {revers3length} from './Functions';
+import * as func from './Functions';
+import WinNumb from './WinNumb';
 
-export default function AddNumbers({badge, setBadge}) {
+export default function AddNumbers({badge, setBadge, config, setConfig}) {
+  const [top, setTop] = useState (0);
+  const [down, setDown] = useState (0);
+  const [tod, setTod] = useState (0);
+
   async function checkLength (input, index) {
-    console.log (input);
-    let func = 'reverse2numb';
     let TodDisable = true;
-    let tod = 0;
-    let bottom = 0;
     let BottomDisable = false;
     if (input.length > 2) {
       TodDisable = false;
       BottomDisable = true;
-      tod = '';
-      bottom = 0;
-      func = 'sortSix';
     } else if (input.length === 1) {
       // เลขวิ่ง
-      func = 'none';
+    } else {
+      // 2ตัว
     }
 
-    let pass = await loopForFoundNumb (input);
-    console.log (pass);
+    // let pass = await loopForFoundNumb (input);
+    let pass = true;
     if (pass || input === '') {
       setBadge (prevState =>
         prevState.map ((x, i) => {
           if (i === index) {
-            return {
-              numb: input,
-              Top: x.Top,
-              Bottom: bottom,
-              Tod: tod,
-              TodDisable: TodDisable,
-              BottomDisable: BottomDisable,
-              func: func,
-            };
+            if (input.length > 2) {
+              if (copyTop && copyTod && i !== 0) {
+                return {
+                  numb: input,
+                  Top: top !== 0 ? top : x.Top,
+                  Bottom: x.Bottom,
+                  Tod: tod !== 0 ? tod : x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (copyTop && !copyTod && i !== 0) {
+                return {
+                  numb: input,
+                  Top: top !== 0 ? top : x.Top,
+                  Bottom: x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (!copyTop && copyTod && i !== 0) {
+                return {
+                  numb: input,
+                  Top: x.Top,
+                  Bottom: x.Bottom,
+                  Tod: tod !== 0 ? tod : x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (!copyTop && !copyTod && i !== 0) {
+                return {
+                  numb: input,
+                  Top: x.Top,
+                  Bottom: x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (i === 0) {
+                return {
+                  numb: input,
+                  Top: x.Top,
+                  Bottom: x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              }
+            } else {
+              if (copyTop && copyDown && i !== 0) {
+                return {
+                  numb: input,
+                  Top: top !== 0 ? top : x.Top,
+                  Bottom: down !== 0 ? down : x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (copyTop && !copyDown && i !== 0) {
+                return {
+                  numb: input,
+                  Top: top !== 0 ? top : x.Top,
+                  Bottom: x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (!copyTop && copyDown && i !== 0) {
+                return {
+                  numb: input,
+                  Top: x.Top,
+                  Bottom: down !== 0 ? down : x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (!copyTop && !copyDown && i !== 0) {
+                return {
+                  numb: input,
+                  Top: x.Top,
+                  Bottom: x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              } else if (i === 0) {
+                return {
+                  numb: input,
+                  Top: x.Top,
+                  Bottom: x.Bottom,
+                  Tod: x.Tod,
+                  TodDisable: TodDisable,
+                  BottomDisable: BottomDisable,
+                  reverse: false,
+                  set: 0,
+                };
+              }
+            }
           } else {
             return x;
           }
@@ -44,6 +149,10 @@ export default function AddNumbers({badge, setBadge}) {
       );
     } else {
       alert ('มีเลขชุดนี้แล้ว');
+    }
+    console.log (badge);
+    if (badge[index].set !== 0) {
+      setBadge (func.setZero (badge, badge[index].set, index, input));
     }
   }
 
@@ -70,7 +179,8 @@ export default function AddNumbers({badge, setBadge}) {
             Tod: x.Tod,
             TodDisable: x.TodDisable,
             BottomDisable: x.BottomDisable,
-            func: x.func,
+            reverse: x.reverse,
+            set: x.set,
           };
         return x;
       })
@@ -88,7 +198,8 @@ export default function AddNumbers({badge, setBadge}) {
             Tod: x.Tod,
             TodDisable: x.TodDisable,
             BottomDisable: x.BottomDisable,
-            func: x.func,
+            reverse: x.reverse,
+            set: x.set,
           };
         return x;
       })
@@ -106,7 +217,8 @@ export default function AddNumbers({badge, setBadge}) {
             Tod: input,
             TodDisable: x.TodDisable,
             BottomDisable: x.BottomDisable,
-            func: x.func,
+            reverse: x.reverse,
+            set: x.set,
           };
         return x;
       })
@@ -123,44 +235,22 @@ export default function AddNumbers({badge, setBadge}) {
         Tod: '',
         TodDisable: true,
         BottomDisable: false,
-        func: 'reverse2numb',
+        reverse: false,
+        set: 0,
       },
     ]);
   }
 
   useEffect (
     () => {
-      if (badge[0].numb === '') {
-        document.getElementById ('first').focus ();
-      }
+      async () => {
+        // console.log (badge);
+        // let data = await summaryPrice (badge);
+        // console.log (data);
+      };
     },
     [badge]
   );
-
-  function revers2numb (input, index) {
-    console.log (input);
-    let arr = [];
-    for (let i = 0; i < badge.length; i++) {
-      if (i < badge[index]) {
-        arr.push (badge[i]);
-      } else if (i === index) {
-        arr.push ({
-          numb: input.numb[1] + '' + input.numb[0],
-          Top: input.Top,
-          Bottom: input.Bottom,
-          Tod: input.Tod,
-          TodDisable: input.TodDisable,
-          BottomDisable: input.BottomDisable,
-        });
-      }
-    }
-    setBadge ([...badge, arr]);
-  }
-
-  async function revers6numb (x, i) {
-    let result = await revers3length (i, badge, x.numb, x.Top, x.Tod);
-    setBadge (result);
-  }
 
   //   function removeBadge (index) {
   //     console.log (index);
@@ -168,107 +258,187 @@ export default function AddNumbers({badge, setBadge}) {
   //     arr.splice (index, 1);
   //     setBadge (arr);
   //   }
-  function checkedRadio () {
-    setCopy (!copy);
+
+  function addRav (input, index) {
+    if (val.numb.length === 2) {
+      setBadge (func.revers2length (input, index, badge));
+    } else if (val.numb.length === 3) {
+      setBadge (func.revers3length (index, badge, input));
+    }
+  }
+
+  function door19 (index) {
+    setBadge (func.doo19 (badge, index));
   }
 
   function getBadge () {
-    return badge.map ((x, i) => (
-      <InputGroup key={i} className="mb-3">
-        {i === 0 &&
-          <input
-            id="first"
-            className="numbTxt"
-            type="number"
-            placeholder="หมายเลข"
-            min="0"
-            value={x.numb}
-            onChange={e => {
-              checkLength (e.target.value, i);
-            }}
-          />}
-        {i !== 0 &&
-          <input
-            className="numbTxt"
-            type="number"
-            placeholder="หมายเลข"
-            min="0"
-            value={x.numb}
-            onChange={e => {
-              checkLength (e.target.value, i);
-            }}
-          />}
-        {x.func === 'none' &&
-          <Button variant="secondary" disable={true} style={{width: '80px'}}>
-            กลับเลข
-          </Button>}
-        {x.func === 'reverse2numb' &&
-          <Button
-            variant="warning"
-            onClick={() => {
-              revers2numb (x, i);
-            }}
-            style={{width: '80px'}}
-          >
-            กลับเลข
-          </Button>}
-        {x.func === 'sortSix' &&
-          <Button
-            variant="warning"
-            onClick={() => {
-              revers6numb (x, i);
-            }}
-            style={{width: '80px'}}
-          >
-            6กลับ
-          </Button>}
-        <Form.Control
-          placeholder="บน"
-          onChange={e => {
-            addTop (e.target.value, i);
-          }}
-          value={x.Top}
-        />
-        <Form.Control
-          placeholder="ล่าง"
-          onChange={e => {
-            addBottom (e.target.value, i);
-          }}
-          value={x.Bottom}
-          readOnly={x.BottomDisable}
-        />
-        <Form.Control
-          placeholder="โต๊ด"
-          onChange={e => {
-            addTod (e.target.value, i);
-          }}
-          value={x.Tod}
-          readOnly={x.TodDisable}
-        />
-        {i === badge.length - 1 &&
-          <Button
-            variant="warning"
-            onClick={() => {
-              addBadge ();
-            }}
-          >
-            +
-          </Button>}
-        {/* <Button
-          variant="danger"
-          onClick={() => {
-            removeBadge (i);
-          }}
-        >
-          -
-        </Button> */}
-      </InputGroup>
-    ));
+    if (badge !== undefined) {
+      return badge.map ((x, i) => (
+        <tr key={i} className="text-center">
+          <td style={{width: '5%'}}>{i + 1}</td>
+          <td>
+            <Form.Control
+              size="sm"
+              id="first"
+              onChange={e => {
+                checkLength (e.target.value, i);
+              }}
+              value={x.numb}
+              maxLength="4"
+              className="text-center"
+            />
+          </td>
+          <td style={{width: '18%'}}>
+            <Form.Control
+              size="sm"
+              onChange={e => {
+                addTop (e.target.value, i);
+                setTop (e.target.value);
+              }}
+              className="text-end"
+              value={x.Top}
+            />
+          </td>
+          <td style={{width: '18%'}}>
+            {x.BottomDisable === false &&
+              <Form.Control
+                size="sm"
+                onChange={e => {
+                  addBottom (e.target.value, i);
+                  setDown (e.target.value);
+                }}
+                className="text-end"
+                value={x.Bottom}
+              />}
+          </td>
+          <td style={{width: '18%'}}>
+            {x.TodDisable === false &&
+              <Form.Control
+                size="sm"
+                onChange={e => {
+                  addTod (e.target.value, i);
+                  setTod (e.target.value);
+                }}
+                className="text-end"
+                value={x.Tod}
+              />}
+          </td>
+          <td style={{width: '5%'}}>
+            {x.set === 0 &&
+              x.numb.length > 0 &&
+              <Form.Check
+                type="checkbox"
+                checked={x.reverse}
+                onChange={() => {
+                  addRav (x, i);
+                }}
+              />}
+          </td>
+          <td style={{width: '5%'}}>
+            {x.numb.length === 1 &&
+              <Form.Check
+                type="checkbox"
+                onChange={() => {
+                  door19 (i);
+                }}
+              />}
+          </td>
+        </tr>
+      ));
+    }
   }
+
+  async function cTop () {
+    setConfig ({
+      row: config.row,
+      top: !config.top,
+      down: config.down,
+      tod: config.tod,
+    });
+  }
+  async function cDown () {
+    setConfig ({
+      row: config.row,
+      top: config.top,
+      down: !config.down,
+      tod: config.tod,
+    });
+  }
+  async function cTod () {
+    setConfig ({
+      row: config.row,
+      top: config.top,
+      down: config.down,
+      tod: !config.tod,
+    });
+  }
+
   return (
     <div>
-
-      {getBadge ()}
+      <Table striped bordered hover>
+        <thead>
+          <tr className="text-center">
+            <th colSpan={2}>{'กำหนดค่าเดียวกัน'}</th>
+            <th>
+              <Form.Check
+                type="checkbox"
+                checked={config.top}
+                onChange={cTop}
+              />
+            </th>
+            <th>
+              <Form.Check
+                type="checkbox"
+                checked={config.down}
+                onChange={cDown}
+              />
+            </th>
+            <th>
+              <Form.Check
+                type="checkbox"
+                checked={config.tod}
+                onChange={cTod}
+              />
+            </th>
+            <th colSpan={2}>
+              <Button size="sm">วินเลข</Button>
+            </th>
+          </tr>
+        </thead>
+        <thead>
+          <tr className="text-center">
+            <th>ลำดับ</th>
+            <th>หมายเลข</th>
+            <th>บน</th>
+            <th>ล่าง</th>
+            <th>โต๊ด</th>
+            <th>กลับ</th>
+            <th>19ตัว</th>
+          </tr>
+        </thead>
+        <tbody>
+          {getBadge ()}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colSpan={2}>รวมยอด</th>
+            <th className="text-end">0</th>
+            <th className="text-end">0</th>
+            <th className="text-end">0</th>
+            <th colSpan={2}>
+              <Button
+                className="btn-warning"
+                style={{width: '100%'}}
+                onClick={() => {
+                  addBadge ();
+                }}
+              >
+                เพิ่ม
+              </Button>
+            </th>
+          </tr>
+        </tfoot>
+      </Table>
     </div>
   );
 }

@@ -21,9 +21,7 @@ export default function AddSixRevers({show, setSix, badge, setBadge}) {
   }
 
   async function reversAll () {
-    let result = await revers3length (null, badge, numb, top, tod);
-    console.log (result);
-    setBadge (result);
+    setBadge (revers3length (0, badge, {numb, top, tod}));
     setSix (false);
   }
 
