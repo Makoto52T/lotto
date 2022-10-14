@@ -28,7 +28,7 @@ export const revers3length = (index, badge, val) => {
   }
 
   if (single.length === 3) {
-    return [
+    let data = [
       ...old,
       {
         numb: numb,
@@ -101,6 +101,8 @@ export const revers3length = (index, badge, val) => {
         set: 0,
       },
     ];
+    console.log (data);
+    return data;
   } else if (single.length === 2) {
     return [
       ...old,

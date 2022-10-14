@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {Button, Form, InputGroup} from 'react-bootstrap';
 import {BsCartPlus} from 'react-icons/bs';
 import * as func from './Functions';
+
 export default function AddOneRow({badge, setBadge, selectBtn}) {
   const [Numb, setNumb] = useState ('');
   const [len, setLen] = useState (2);
-  const [ph, setPh] = useState ('');
 
   useEffect (
     () => {
@@ -16,25 +16,18 @@ export default function AddOneRow({badge, setBadge, selectBtn}) {
       } else if (selectBtn === '19 ประตู' || selectBtn === 'เลขวิ่ง') {
         setLen (1);
       }
-      
-      if (selectBtn) {
-        if (selectBtn === '6กลับ') {
-          setPh ('3ตัว');
-        } else {
-          setPh (selectBtn);
-        }
-      }
+
     },
     [selectBtn]
   );
 
   async function checkLen (numb) {
-    console.log (numb);
+    console.log(selectBtn,numb.length);
     if (
-      (ph === '2ตัว' && numb.length === 2) ||
-      (ph === '3ตัว' && numb.length === 3) ||
-      (ph === '19 ประตู' && numb.length === 1) ||
-      (ph === 'เลขวิ่ง' && numb.length === 1)
+      (selectBtn === '2ตัว' && numb.length === 2) ||
+      (selectBtn === '3ตัว' && numb.length === 3) ||
+      (selectBtn === '19 ประตู' && numb.length === 1) ||
+      (selectBtn === 'เลขวิ่ง' && numb.length === 1)
     ) {
       let data = await addBadge (numb);
       await checkBtn (data);
@@ -47,12 +40,14 @@ export default function AddOneRow({badge, setBadge, selectBtn}) {
       await checkBtn (data);
     }
   }
+
   function checkBtn (data) {
-    if (ph === '2ตัว') {
+    console.log('this checkBtn');
+    if (selectBtn === '2ตัว') {
       // setLen (2);
-    } else if (ph === '3ตัว') {
+    } else if (selectBtn === '3ตัว') {
       // setLen (3);
-    } else if (ph === '19 ประตู') {
+    } else if (selectBtn === '19 ประตู') {
       let index = 0;
       for (let i = 0; i < data.length; i++) {
         if (data[i].numb.length === 1) {
@@ -61,18 +56,18 @@ export default function AddOneRow({badge, setBadge, selectBtn}) {
         }
       }
       data = func.doo19 (data, index);
-    } else if (ph === 'เลขวิ่ง') {
+    } else if (selectBtn === 'เลขวิ่ง') {
     }
     if (data && data[0].numb !== '' && data.length > 1) {
       setBadge (func.CheckNumb (data));
     }
-    setNumb ();
+    setNumb ('');
   }
 
   function addBadge (numb) {
     let TodDisable = true;
     let BottomDisable = false;
-    if (ph === '3ตัว') {
+    if (selectBtn === '3ตัว') {
       TodDisable = false;
       BottomDisable = true;
     }
@@ -105,7 +100,6 @@ export default function AddOneRow({badge, setBadge, selectBtn}) {
           set: 0,
         },
       ];
-      setNumb ('');
       return data;
     }
   }
@@ -165,11 +159,12 @@ export default function AddOneRow({badge, setBadge, selectBtn}) {
   return (
     <InputGroup>
       <Form.Control
-        placeholder={ph}
+        placeholder={selectBtn}
         value={Numb}
         maxLength={len}
         onChange={e => {
           checkLen (e.target.value);
+          setNumb(e.target.value)
         }}
         onKeyPress={e => ckeckKey (e.key)}
       />
@@ -180,7 +175,7 @@ export default function AddOneRow({badge, setBadge, selectBtn}) {
           addTop (e.target.value);
         }}
       />
-      {ph !== '3ตัว'
+      {selectBtn !== '3ตัว'
         ? <Form.Control
             placeholder="ล่าง"
             onChange={e => {

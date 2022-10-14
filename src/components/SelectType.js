@@ -2,7 +2,15 @@ import React from 'react';
 import {Row, Col} from 'react-bootstrap';
 import BtnList from './BtnList';
 
-export default function SelectType({data, btn, setBtn, setSelect, setBadge}) {
+export default function SelectType({
+  data,
+  btn,
+  setBtn,
+  setSelect,
+  setBadge,
+  selectBtn,
+  setOldBtn,
+}) {
   let config = {
     size: 'sm',
     margin: '3px',
@@ -18,6 +26,7 @@ export default function SelectType({data, btn, setBtn, setSelect, setBadge}) {
   }
 
   function btnList (input, index) {
+    setOldBtn (selectBtn);
     setBtn (prevState =>
       prevState.map ((x, i) => {
         if (i === index) {
@@ -27,7 +36,6 @@ export default function SelectType({data, btn, setBtn, setSelect, setBadge}) {
         return {name: x.name, variant: 'secondary'};
       })
     );
-    setBadge ();
   }
 
   if (data) {

@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
 
 export default function Badge({badge}) {
-  const [top, setTop] = useState (0);
-  const [down, setDown] = useState (0);
-  const [tod, setTod] = useState (0);
-
   function getBadge () {
-    if (badge !== undefined) {
-      return badge.map ((x, i) => (
+    console.log ('this getBadge', badge);
+    if (badge && badge[0].numb !== '') {
+      return badge.map ((x, i) => // console.log (x.numb)
+      (
         <span
           key={i}
           className="badge bg-danger"
@@ -21,8 +19,8 @@ export default function Badge({badge}) {
           {x.numb}
         </span>
       ));
-    } else {
-      return <div>{''}</div>;
+    } else if (badge && badge[0].numb === '') {
+      return <div className="my-3">{''}</div>;
     }
   }
 
